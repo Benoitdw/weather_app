@@ -2,12 +2,12 @@ import { createContext, useState } from "react";
 import { Localisation } from "../common/type";
 
 export interface LocalisationContextType {
-  localisation: Localisation;
-  setLocalisation: React.Dispatch<React.SetStateAction<Localisation>>;
+  localisation: Localisation | null;
+  setLocalisation: React.Dispatch<React.SetStateAction<Localisation | null>>;
 }
 
 const defaultLocalisation = {
-  localisation: {latitude: 50.72, longitude: 4.6}
+  localisation: null
 }
 export const LocalisationContext = createContext<LocalisationContextType | null>(null);
 
@@ -16,7 +16,8 @@ interface LocalisationProviderProps {
   }
 
 export default function LocalisationProvider({ children }: LocalisationProviderProps) {
-    const [localisation, setLocalisation] = useState(defaultLocalisation.localisation);
+
+    const [localisation, setLocalisation] = useState<Localisation | null>(defaultLocalisation.localisation);
 
     return (
       <LocalisationContext.Provider value={{localisation, setLocalisation}}>

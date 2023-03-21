@@ -35,7 +35,7 @@ const Hours = ({ dateToFetch }: HourProps) => {
       {hours.length != 0
         ? hours.map((value, index) => {
             return (
-              <div className="bg-white/30 snap-center shrink-0 w-[40px] h-[70px] rounded-full flex flex-col content-center items-center text-[#9C9EAA] text-xs justify-center py-1">
+              <div key={index} className="bg-white/30 snap-center shrink-0 w-[40px] h-[70px] rounded-full flex flex-col content-center items-center text-[#9C9EAA] text-xs justify-center py-1">
                 <div>{format(value.date, "HH':'mm")}</div>
                 <div className="w-6 overflow-hidden -mt-1 ">
                   <img

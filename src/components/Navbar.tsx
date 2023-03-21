@@ -7,7 +7,7 @@ const Nav = (props:{is_main:boolean}) => {
     <nav className="flex h-[48px] justify-between w-full text-[24px] semi-bold">
       <div>
         {!props.is_main? 
-          <button className="h-full" onClick={() => navigate(-1)}>
+          <button className="h-full" onClick={() => navigate('/')}>
             <i className="m-[12px] ri-arrow-go-back-line"></i>
           </button>
         : ""}
