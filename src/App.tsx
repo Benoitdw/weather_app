@@ -1,26 +1,27 @@
-import { useState } from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import {Nav, Header,  NextDays, WeatherInfo} from './components';
-import ApiProvider from './contexts/ApiProvider';
-import MeteoProvider from './contexts/MeteoContext';
+import { useState } from "react";
+import { MainPage, SearchPage, NextDaysPage } from "./pages";
+import { Route, Routes } from "react-router-dom";
+import ApiProvider from "./contexts/ApiProvider";
+import MeteoProvider from "./contexts/MeteoContext";
+import LocalisationProvider from "./contexts/LocalisationContext";
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  
   return (
-    <BrowserRouter>
     <div className="max-w-md w-full min-h-screen bg-white/30 text-[#303345]">
       <ApiProvider>
-      <MeteoProvider>
-        <Nav />
-        <Header city="Wavre" country="Belgium" />
-        <WeatherInfo />
-        <NextDays />
-      </MeteoProvider>
+        <LocalisationProvider>
+          <MeteoProvider>
+            <Routes>
+              <Route path="/" element={<MainPage />} />
+              <Route path="/search" element={<SearchPage />} />
+              <Route path="/next_days" element={<NextDaysPage />} />
+            </Routes>
+          </MeteoProvider>
+        </LocalisationProvider>
       </ApiProvider>
     </div>
-    </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;

@@ -62,7 +62,7 @@ const WeatherInfo = () => {
 
   const weather_icon = "./assets/weather_icons/" + currentWeather.vmo.icon;
   return (
-    <div className="px-4 pb-4">
+    <div className="pb-4">
       <div className="flex justify-center justify-items-center">
         <div className="w-48 overflow-hidden ">
           <img src={weather_icon} className="transform scale-[2.5]" />

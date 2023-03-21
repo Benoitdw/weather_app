@@ -1,11 +1,11 @@
 import Nav from './Navbar'
 import Header from './Header'
 import WeatherInfo from './WeatherInfo'
-import NextDays from './NextDays'
+import HoursDetail from './HoursDetails'
 
 export {
     Nav,
     Header,
     WeatherInfo,
-    NextDays
+    HoursDetail as NextDays
 }
