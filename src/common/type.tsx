@@ -34,6 +34,12 @@ interface HourlyUnits {
 }
 
 export interface Localisation {
-    latitude: number,
+    latitude: number;
     longitude: number
+}
+
+export interface City extends Localisation {
+    name?: string;
+    country?: string;
+    state?: string;
 }

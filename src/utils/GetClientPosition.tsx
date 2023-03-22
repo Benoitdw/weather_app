@@ -1,4 +1,5 @@
-import { Localisation } from "../common/type";
+import { City, Localisation } from "../common/type";
+
 
 var options = {
     enableHighAccuracy: true,
@@ -7,15 +8,13 @@ var options = {
   };
 
   function success(pos: any) {
-    console.log(typeof(pos))
       var crd = pos.coords;
-      return {latitude:crd.latitude, longitude: crd.longitude} as Localisation
-  
+      return {latitude:crd.latitude, longitude: crd.longitude,  name:"Wavre", country:"Belgium", state:"BW"} as City // TODO remove hard coded value
   }
   
   function errors(err: any) {
     console.warn(`ERROR(${err.code}): ${err.message}`);
-    return {latitude:50.51, longitude: 4.20} as Localisation
+    return {latitude:50.51, longitude: 4.20, name:"Waver", country:"Belgium", state:"BW"} as City
   }
   
 
@@ -25,11 +24,11 @@ const getClientPosition = () => {
           .query({ name: "geolocation" })
           .then(function (result) {
             if (result.state === "granted") {
-                return navigator.geolocation.getCurrentPosition(success);
+                navigator.geolocation.getCurrentPosition(success);
             } else if (result.state === "prompt") {
-                return navigator.geolocation.getCurrentPosition(success, errors, options);
+                navigator.geolocation.getCurrentPosition(success, errors, options);
             } else if (result.state === "denied") {
-                return {latitude:50.51, longitude: 4.20}
+                return {latitude:50.51, longitude: 4.20, name:"Waver", country:"Belgium", state:"BW"} 
             }
             result.onchange = function () {
               console.log(result.state);
@@ -38,7 +37,7 @@ const getClientPosition = () => {
       } else {
         alert("Sorry Not available!");
       }
-      return {latitude:50.51, longitude: 4.20} as Localisation
+      return {latitude:50.51, longitude: 4.20, name:"Waver", country:"Belgium", state:"BW"} as City //  TODO IT's HARDCODED ! 
     }
 
 export default getClientPosition

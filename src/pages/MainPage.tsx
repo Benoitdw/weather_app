@@ -1,14 +1,11 @@
 import { Header, NextDays, WeatherInfo } from "../components";
 import { Nav } from "../components";
-
-import { Localisation } from "../common/type";
-import { useState, useContext, useEffect } from "react";
+import {  useContext, useEffect } from "react";
 import { MeteoContext, MeteoContextType } from "../contexts/MeteoContext";
 import {
   LocalisationContext,
   LocalisationContextType,
 } from "../contexts/LocalisationContext";
-import { MeteoType } from "../common/type";
 import { useApi } from "../contexts/ApiProvider";
 import WeatherApiClient from "../WeatherApiClient";
 import {getMeteoCall, getClientPosition} from "../utils";
@@ -22,6 +19,7 @@ const MainPage = () => {
 
   useEffect(() => {
     (async () => {
+      console.log(localisation)
       if (!localisation) {
         setLocalisation(getClientPosition());
       }
@@ -38,7 +36,7 @@ const MainPage = () => {
     <>
       <Nav is_main={true} />
       <div className="px-4">
-        <Header city="Wavre" country="Belgium" />
+        <Header/>
         <WeatherInfo />
         <NextDays />
       </div>

@@ -1,17 +1,13 @@
 import { Nav } from "../components";
-import getMeteo from "../utils/GetMeteoCall";
-import { Localisation } from "../common/type";
-import { useState, useContext, useEffect } from "react";
-import { MeteoContext, MeteoContextType } from "../contexts/MeteoContext";
-import { MeteoType } from "../common/type";
-import { useApi } from "../contexts/ApiProvider";
-import WeatherApiClient from "../WeatherApiClient";
-import getMeteoCall from "../utils/GetMeteoCall";
+import { City } from "../common/type";
+import {  useContext} from "react";
+
 import {
   LocalisationContext,
   LocalisationContextType,
 } from "../contexts/LocalisationContext";
 import { useNavigate } from "react-router-dom";
+import {usePlacesWidget} from "react-google-autocomplete";
 
 // TODO see https://dev.to/karan316/build-forms-using-react-the-easy-way-with-typescript-46bh to better form
 
@@ -21,48 +17,32 @@ const SearchPage = () => {
     LocalisationContext
   ) as LocalisationContextType;
 
-  const [newLocalisation, setNewLocalisation] =
-    useState<Localisation>({longitude:0, latitude:0});
-
-  const handleSubmit = () => {
-    setLocalisation(newLocalisation);
-    navigate("/");
+  const onChange = (place: any) => {
+    let newLocation: City = {
+      latitude: place.geometry.location.lat(),
+      longitude: place.geometry.location.lng(),
+      name: place.address_components[0].long_name,
+      country: place.address_components[3]?.long_name,
+      state: place.address_components[1]?.long_name,
+    };
+    setLocalisation(newLocation);
+    navigate('/')
   };
 
-  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNewLocalisation({
-      ...newLocalisation,
-      [event.target.name]: event.target.value,
-    });
-  };
+  const { ref } = usePlacesWidget({
+    apiKey: import.meta.env.VITE_GOOGLE_API_KEY,
+    onPlaceSelected: (place) => onChange(place),
+    options: {
+      types: ["(regions)"],
+    },
+    language: "en",
+  });
 
   return (
     <>
       <Nav is_main={false} />
-      <div className="px-4">
-        <form onSubmit={() => handleSubmit()} className="flex flex-col gap-10">
-          <label>
-            Latitude:
-            <input
-              name="latitude"
-              id="latitude"
-              type="number"
-              value={newLocalisation.latitude}
-              onChange={onChange}
-            />
-          </label>
-          <label>
-            Longitude:
-            <input
-              name="longitude"
-              id="longitude"
-              type="number"
-              value={newLocalisation.longitude}
-              onChange={onChange}
-            />
-          </label>
-          <button type="submit">Search</button>
-        </form>
+      <div  className="px-4 h-screen flex flex-col place-items-center justify-center ">
+        <input ref={ref} className="bg-white/40 rounded-lg px-4 py-2 text-xl w-full"/>
       </div>
     </>
   );
